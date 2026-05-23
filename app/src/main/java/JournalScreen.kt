@@ -24,6 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.journal.Entry
 import com.example.journal.formatDate
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.ui.text.style.TextOverflow
 
 /**
  * Main journal screen.
@@ -38,7 +41,8 @@ fun JournalScreen(
     entries: MutableList<Entry>,
     onEntrySelected: (Entry) -> Unit,
     onNewEntryPressed: () -> Unit,
-    onThemeToggle: () -> Unit
+    onThemeToggle: () -> Unit,
+    darkTheme: Boolean
 ) {
 
     Column(
@@ -79,7 +83,23 @@ fun JournalScreen(
                 }
             ) {
 
-                Text("Theme")
+                Icon(
+                    imageVector =
+                        if (darkTheme) {
+                            Icons.Default.LightMode
+                        } else {
+                            Icons.Default.DarkMode
+                        },
+
+                    contentDescription = "Toggle Theme",
+
+                    tint =
+                        if (darkTheme) {
+                            androidx.compose.ui.graphics.Color.White
+                        } else {
+                            androidx.compose.ui.graphics.Color.Black
+                        }
+                )
             }
         }
 
@@ -132,6 +152,8 @@ fun JournalScreen(
 
                             Text(
                                 text = entry.title,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 style = MaterialTheme.typography.titleMedium
                             )

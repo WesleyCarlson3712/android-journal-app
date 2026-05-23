@@ -1,3 +1,4 @@
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,7 +35,6 @@ import com.example.journal.Entry
 import com.example.journal.formatDate
 import com.example.journal.getCurrentTime
 import com.example.journal.isDifferentDay
-
 /**
  * Screen used to create or edit a journal entry.
  *
@@ -64,8 +64,13 @@ fun EntryScreen(
     }
 
     val canSave =
-        currentTitle.isNotBlank() &&
-                currentText.isNotBlank()
+        currentTitle.isNotBlank() && currentText.isNotBlank() &&
+                (currentTitle != entry.title || currentText != entry.content)
+
+    BackHandler {
+
+        onCancelPressed()
+    }
 
     Column(
         modifier = Modifier
@@ -93,7 +98,8 @@ fun EntryScreen(
             label = {
                 Text("Title")
             },
-
+            maxLines = 3,
+            singleLine = true,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.surface,
                 unfocusedContainerColor = MaterialTheme.colorScheme.surface

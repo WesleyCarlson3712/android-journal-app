@@ -23,7 +23,6 @@ import com.example.journal.ui.theme.JournalTheme
  * - loading and saving data
  */
 
-
 @Composable
 fun JournalApp() {
 
@@ -80,7 +79,8 @@ fun JournalApp() {
                         darkTheme,
                         context
                     )
-                }
+                },
+                darkTheme = darkTheme
             )
         } else {
             // if we have selected an entry, go to the entry display screen
